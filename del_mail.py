@@ -3,6 +3,8 @@ from apiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
 
+import sys
+
 # Setup the Gmail API
 SCOPES = 'https://mail.google.com/'
 store = file.Storage('token.json')
@@ -20,6 +22,10 @@ print("The keyword is " + keyword)
 req = service.users().messages().list(userId='me', q=keyword)
 res = req.execute()
 messages = res.get('messages')
+
+if messages is None or len(messages) <= 0:
+    print("No Email found")
+    sys.exit(0)
 
 # Show message titles
 print("Here is some of the mails.")
