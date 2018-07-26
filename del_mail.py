@@ -44,5 +44,7 @@ while messages != None and len(messages) > 0:
     total += count
     print("Deleted %d emails" % total)
     req = service.users().messages().list_next(req, res)
+    if req is None:
+        break
     res = req.execute()
     messages = res.get('messages')
